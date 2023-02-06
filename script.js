@@ -34,6 +34,9 @@ const gameBoard = (() => {
 })();
 
 const displayController = (() => {
+  const startForm = document.querySelector(".players-form");
+  const p1Marks = document.querySelectorAll(".player1-mark-");
+  const p2Marks = document.querySelectorAll(".player2-mark-");
   const cells = document.querySelectorAll(".cell");
   const initScoreBoard = (player1, player2) => {
     document.querySelector(".player1-name").innerText = player1.name;
@@ -58,7 +61,37 @@ const displayController = (() => {
   const unlockBoard = () => {
     document.querySelector(".game-board").classList.remove("locked");
   };
+  const startGame = (p1, p2) => {
+    document.querySelector(".game-container").classList.remove("hidden");
+    document.querySelector(".splash-screen-container").classList.add("hidden");
+    initScoreBoard(p1, p2);
+  };
   const init = (() => {
+    p1Marks.forEach((mark, index) => {
+      mark.addEventListener("click", (e) => {
+        if (!p2Marks[index].classList.contains("selected")) {
+          mark.classList.add("selected");
+          p1Marks[index === 1 ? 0 : 1].classList.remove("selected");
+        }
+      });
+    });
+    p2Marks.forEach((mark, index) => {
+      mark.addEventListener("click", (e) => {
+        if (!p1Marks[index].classList.contains("selected")) {
+          mark.classList.add("selected");
+          p2Marks[index === 1 ? 0 : 1].classList.remove("selected");
+        }
+      });
+    });
+    startForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const p1Name = startForm["player1-name"].value.trim();
+      const p2Name = startForm["player2-name"].value.trim();
+      const p1Mark = document.querySelector(".player1-mark-.selected").textContent;
+      const p2Mark = document.querySelector(".player2-mark-.selected").textContent;
+      console.log(p1Name, p1Mark, p2Name, p2Mark);
+      if (p1Name && p2Name && p1Mark && p2Mark) gameController.startGame(p1Name, p1Mark, p2Name, p2Mark);
+    });
     cells.forEach((cell) =>
       cell.addEventListener("click", (e) => {
         const index = e.target.getAttribute("data-index");
@@ -86,18 +119,23 @@ const displayController = (() => {
       e.target.parentElement.classList.add("hidden");
     });
   })();
-  return { initScoreBoard, updateBoard, updateScoreBoard, displayWinner };
+  return { initScoreBoard, updateBoard, updateScoreBoard, displayWinner, startGame };
 })();
 
 const gameController = (() => {
-  const player = (name, mark, score) => {
+  const player = (name, mark) => {
     const incrementScore = () => ++score;
-    return { name, mark, score, incrementScore };
+    return { name, mark, score: 0, incrementScore };
   };
-  const p1 = player("john", "X", 0);
-  const p2 = player("mark", "O", 0);
-  displayController.initScoreBoard(p1, p2);
-  var turn = p1;
+  var turn;
+  var p1, p2;
+  const startGame = (p1Name, p1Mark, p2Name, p2Mark) => {
+    p1 = player(p1Name, p1Mark);
+    p2 = player(p2Name, p2Mark);
+    turn = p1;
+    displayController.startGame(p1, p2);
+  };
+
   const incCurr = () => turn.score++;
   const getCurrPlayer = () => turn;
   const changeTurn = () => {
@@ -105,5 +143,5 @@ const gameController = (() => {
     else turn = p1;
   };
   const getScores = () => [p1.score, p2.score];
-  return { getCurrPlayer, changeTurn, getScores, incCurr };
+  return { getCurrPlayer, changeTurn, getScores, incCurr, startGame };
 })();

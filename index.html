@@ -9,7 +9,35 @@
   </head>
   <body>
     <div class="main-container">
-      <div class="game-container">
+      <div class="splash-screen-container">
+        <h1 class="splash-screen-title">Welcome to Tic Tac Toe</h1>
+        <form class="players-form">
+          <div class="fl">
+            <div class="player-seeting">
+              <p>Player 1</p>
+              <div>
+                <input type="text" placeholder="please enter your name" name="player1-name" class="inp" />
+              </div>
+              <div class="marks-container player1-marks">
+                <p name="mark" class="mark player1-mark-" data-value="X">X</p>
+                <p name="mark" class="mark player1-mark-" data-value="O">O</p>
+              </div>
+            </div>
+            <div class="player-seeting">
+              <p>Player 2</p>
+              <div>
+                <input type="text" placeholder="please enter your name" name="player2-name" class="inp" />
+              </div>
+              <div class="marks-container player2-marks">
+                <p name="mark" class="mark player2-mark-">X</p>
+                <p name="mark" class="mark player2-mark-">O</p>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="start-game-btn">Start Game</button>
+        </form>
+      </div>
+      <div class="game-container hidden">
         <div class="winner-container hidden">
           <p class="round-end-text"></p>
           <button type="button" class="restart-btn">Play Again</button>
@@ -18,12 +46,12 @@
         <div class="scoreboard">
           <p>
             <span class="player1-name"></span>
-            <span class="player1-mark mark"></span>
+            <span class="player1-mark scoreboard-mark"></span>
             <span class="player1-score"></span>
           </p>
           <p>
             <span class="player2-name"></span>
-            <span class="player2-mark mark"></span>
+            <span class="player2-mark scoreboard-mark"></span>
             <span class="player2-score"></span>
           </p>
         </div>
