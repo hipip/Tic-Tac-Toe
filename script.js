@@ -1,8 +1,12 @@
 const gameBoard = (() => {
-  const board = ["", "", "", "", "", "", "", "", ""];
+  let board = ["", "", "", "", "", "", "", "", ""];
   const isFull = (index) => board[index] !== "";
   const getCell = (index) => board[index];
   const getBoard = () => board;
+  const resetBoard = () => {
+    board = ["", "", "", "", "", "", "", "", ""];
+    displayController.updateBoard();
+  };
   const checkforWin = () => {
     if (
       (isFull(0) && board[0] === board[1] && board[1] === board[2]) ||
@@ -26,7 +30,7 @@ const gameBoard = (() => {
     }
     return false;
   };
-  return { placeMark, getBoard, getCell, checkforWin };
+  return { placeMark, getBoard, getCell, checkforWin, resetBoard };
 })();
 
 const displayController = (() => {
@@ -43,10 +47,17 @@ const displayController = (() => {
     document.querySelector(".player1-score").innerText = score[0];
     document.querySelector(".player2-score").innerText = score[1];
   };
-  const resetBoard = () => {
-    cells.forEach((cell) => (cell.innerText = ""));
-  };
   const updateBoard = () => cells.forEach((cell, index) => (cell.innerText = gameBoard.getCell(index)));
+  const displayWinner = (text) => {
+    document.querySelector(".round-end-text").innerText = text;
+    document.querySelector(".winner-container").classList.remove("hidden");
+  };
+  const lockBoard = () => {
+    document.querySelector(".game-board").classList.add("locked");
+  };
+  const unlockBoard = () => {
+    document.querySelector(".game-board").classList.remove("locked");
+  };
   const init = (() => {
     cells.forEach((cell) =>
       cell.addEventListener("click", (e) => {
@@ -55,11 +66,12 @@ const displayController = (() => {
           updateBoard();
           if ((st = gameBoard.checkforWin())) {
             if (st == "win") {
-              console.log(`${gameController.getCurrPlayer().name} has won !`);
+              displayWinner(`${gameController.getCurrPlayer().name} is the winner !!`);
               gameController.incCurr();
-            } else console.log("it's a Tie !");
+            } else displayWinner("it's a Tie !");
             updateScoreBoard(gameController.getScores());
             updateBoard();
+            lockBoard();
             return;
           }
           gameController.changeTurn();
@@ -68,8 +80,13 @@ const displayController = (() => {
         }
       })
     );
+    document.querySelector(".restart-btn").addEventListener("click", (e) => {
+      gameBoard.resetBoard();
+      unlockBoard();
+      e.target.parentElement.classList.add("hidden");
+    });
   })();
-  return { initScoreBoard, updateBoard, updateScoreBoard, resetBoard };
+  return { initScoreBoard, updateBoard, updateScoreBoard, displayWinner };
 })();
 
 const gameController = (() => {

@@ -10,14 +10,20 @@
   <body>
     <div class="main-container">
       <div class="game-container">
-        <h1>Tic Tac Toe</h1>
+        <div class="winner-container hidden">
+          <p class="round-end-text"></p>
+          <button type="button" class="restart-btn">Play Again</button>
+        </div>
+        <h1 class="main-title">Tic Tac Toe</h1>
         <div class="scoreboard">
           <p>
             <span class="player1-name"></span>
-            <span class="player1-mark"></span>
+            <span class="player1-mark mark"></span>
             <span class="player1-score"></span>
+          </p>
+          <p>
             <span class="player2-name"></span>
-            <span class="player2-mark"></span>
+            <span class="player2-mark mark"></span>
             <span class="player2-score"></span>
           </p>
         </div>
@@ -32,7 +38,6 @@
           <div class="cell" data-index="7"></div>
           <div class="cell" data-index="8"></div>
         </div>
-        <h3 class="roundInfo"></h3>
       </div>
     </div>
   </body>
