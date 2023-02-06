@@ -24,6 +24,7 @@ body {
 .game-container {
   position: absolute;
   text-align: center;
+  padding: 2rem;
   transition: 0.5s cubic-bezier(0.88, 0, 0.11, 0.99);
 }
 
@@ -53,11 +54,9 @@ body {
 }
 .game-board {
   display: grid;
-  grid-template-columns: repeat(3, minmax(10px, 1fr));
-  grid-template-rows: repeat(3, minmax(10px, 1fr));
-  gap: 2px;
-  width: 600px;
-  height: 600px;
+  grid-template-columns: repeat(3, minmax(100px, 200px));
+  grid-template-rows: repeat(3, minmax(100px, 200px));
+  gap: 5px;
 }
 
 .locked {
@@ -72,6 +71,7 @@ body {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border-collapse: collapse;
+  padding: 2rem;
 }
 .cell:hover {
   background-color: rgba(0, 0, 0, 0.4);
