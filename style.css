@@ -54,8 +54,8 @@ body {
 }
 .game-board {
   display: grid;
-  grid-template-columns: repeat(3, minmax(100px, 200px));
-  grid-template-rows: repeat(3, minmax(100px, 200px));
+  grid-template-columns: repeat(3, minmax(80px, 200px));
+  grid-template-rows: repeat(3, minmax(80px, 200px));
   gap: 5px;
 }
 
@@ -70,7 +70,6 @@ body {
   font-size: 3rem;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  border-collapse: collapse;
   padding: 2rem;
 }
 .cell:hover {

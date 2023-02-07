@@ -71,16 +71,24 @@ const displayController = (() => {
       mark.addEventListener("click", (e) => {
         if (!p2Marks[index].classList.contains("selected")) {
           mark.classList.add("selected");
-          p1Marks[index === 1 ? 0 : 1].classList.remove("selected");
+        } else {
+          p2Marks[index].classList.remove("selected");
+          p2Marks[index === 1 ? 0 : 1].classList.add("selected");
         }
+        p1Marks[index].classList.add("selected");
+        p1Marks[index === 1 ? 0 : 1].classList.remove("selected");
       });
     });
     p2Marks.forEach((mark, index) => {
       mark.addEventListener("click", (e) => {
         if (!p1Marks[index].classList.contains("selected")) {
           mark.classList.add("selected");
-          p2Marks[index === 1 ? 0 : 1].classList.remove("selected");
+        } else {
+          p1Marks[index].classList.remove("selected");
+          p1Marks[index === 1 ? 0 : 1].classList.add("selected");
         }
+        p2Marks[index].classList.add("selected");
+        p2Marks[index === 1 ? 0 : 1].classList.remove("selected");
       });
     });
     startForm.addEventListener("submit", (e) => {
