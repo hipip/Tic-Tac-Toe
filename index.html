@@ -11,31 +11,33 @@
     <div class="main-container">
       <div class="splash-screen-container">
         <h1 class="splash-screen-title">Welcome to Tic Tac Toe</h1>
-        <form class="players-form">
-          <div class="fl">
-            <div class="player-seeting">
-              <p>Player 1</p>
-              <div>
-                <input type="text" placeholder="please enter your name" name="player1-name" class="inp" />
+        <div class="player-vs-player">
+          <form class="players-form">
+            <div class="fl">
+              <div class="player-seeting">
+                <p>Player 1</p>
+                <div>
+                  <input type="text" placeholder="please enter your name" name="player1-name" class="inp" />
+                </div>
+                <div class="marks-container player1-marks">
+                  <p name="mark" class="mark player1-mark-" data-value="X">X</p>
+                  <p name="mark" class="mark player1-mark-" data-value="O">O</p>
+                </div>
               </div>
-              <div class="marks-container player1-marks">
-                <p name="mark" class="mark player1-mark-" data-value="X">X</p>
-                <p name="mark" class="mark player1-mark-" data-value="O">O</p>
+              <div class="player-seeting">
+                <p>Player 2</p>
+                <div>
+                  <input type="text" placeholder="please enter your name" name="player2-name" class="inp" />
+                </div>
+                <div class="marks-container player2-marks">
+                  <p name="mark" class="mark player2-mark-">X</p>
+                  <p name="mark" class="mark player2-mark-">O</p>
+                </div>
               </div>
             </div>
-            <div class="player-seeting">
-              <p>Player 2</p>
-              <div>
-                <input type="text" placeholder="please enter your name" name="player2-name" class="inp" />
-              </div>
-              <div class="marks-container player2-marks">
-                <p name="mark" class="mark player2-mark-">X</p>
-                <p name="mark" class="mark player2-mark-">O</p>
-              </div>
-            </div>
-          </div>
-          <button type="submit" class="start-game-btn">Start Game</button>
-        </form>
+            <button type="submit" class="start-game-btn">Start Game</button>
+          </form>
+        </div>
       </div>
       <div class="game-container hidden">
         <div class="winner-container hidden">
@@ -66,6 +68,7 @@
           <div class="cell" data-index="7"></div>
           <div class="cell" data-index="8"></div>
         </div>
+        <p class="info-text"></p>
       </div>
     </div>
   </body>

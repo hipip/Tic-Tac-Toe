@@ -1,3 +1,10 @@
+/**
+ * AI Levels :
+ *    - easy : makes random moves in the legal places
+ *    - medium I don't know
+ *     - hard : uses minmax  algorithm , unbeatable
+ */
+
 const gameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
   const isFull = (index) => board[index] !== "";
@@ -6,6 +13,11 @@ const gameBoard = (() => {
   const resetBoard = () => {
     board = ["", "", "", "", "", "", "", "", ""];
     displayController.updateBoard();
+  };
+  const getEmptyCells = () => {
+    let r = [];
+    for (let [index, cell] of board.entries()) if (!isFull(index)) r.push(index);
+    return r;
   };
   const checkforWin = () => {
     if (
@@ -30,7 +42,7 @@ const gameBoard = (() => {
     }
     return false;
   };
-  return { placeMark, getBoard, getCell, checkforWin, resetBoard };
+  return { placeMark, getBoard, getCell, checkforWin, resetBoard, getEmptyCells };
 })();
 
 const displayController = (() => {
@@ -65,6 +77,10 @@ const displayController = (() => {
     document.querySelector(".game-container").classList.remove("hidden");
     document.querySelector(".splash-screen-container").classList.add("hidden");
     initScoreBoard(p1, p2);
+    updateInfoText(`It's ${p1.name}'s Turn ! `);
+  };
+  const updateInfoText = (txt) => {
+    document.querySelector(".info-text").innerText = txt;
   };
   const init = (() => {
     p1Marks.forEach((mark, index) => {
@@ -113,11 +129,13 @@ const displayController = (() => {
             updateScoreBoard(gameController.getScores());
             updateBoard();
             lockBoard();
+            updateInfoText("");
             return;
           }
           gameController.changeTurn();
+          updateInfoText(`It's ${gameController.getCurrPlayer().name}'s Turn ! `);
         } else {
-          console.log("cell already taken");
+          updateInfoText(`Illegal Move by ${gameController.getCurrPlayer().name} !`);
         }
       })
     );
