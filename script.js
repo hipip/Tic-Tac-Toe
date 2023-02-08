@@ -2,8 +2,17 @@
  * AI Levels :
  *    - easy : makes random moves in the legal places
  *    - medium I don't know
- *     - hard : uses minmax  algorithm , unbeatable
+ *    - hard : uses minmax  algorithm , unbeatable
  */
+
+const easyAI = (() => {
+  const play = () => {
+    const choices = gameBoard.getEmptyCells();
+    const choice = choices[Math.floor(Math.random() * choices.length)];
+    displayController.clickCell(choice);
+  };
+  return { play };
+})();
 
 const gameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
