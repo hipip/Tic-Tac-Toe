@@ -10,14 +10,15 @@
   <body>
     <div class="main-container">
       <div class="splash-screen-container">
-        <h1 class="splash-screen-title">Welcome to Tic Tac Toe</h1>
-        <!-- <div>
-          <p>Which Species you want to play against ?</p>
-          <form class="species-form">
-            <button type="submit">Next →</button>
-          </form>
-        </div> -->
-        <div class="player-vs-player">
+        <h1 class="splash-screen-title abs-center">Tic Tac Toe</h1>
+        <div class="select-mode-container">
+          <p class="title">Which Species you want to play against ?</p>
+          <div class="mode-form">
+            <button type="button" class="btn" id="human-btn">Human 🙋</button>
+            <button type="button" class="btn" id="humanoid-btn">Humanoid 🤖</button>
+          </div>
+        </div>
+        <div class="player-vs-player abs-center hide">
           <form class="players-form">
             <div class="fl">
               <div class="player-seeting">
@@ -75,6 +76,7 @@
           <div class="cell" data-index="8"></div>
         </div>
         <p class="info-text"></p>
+        <button onclick="location.reload()">Home</button>
       </div>
     </div>
   </body>

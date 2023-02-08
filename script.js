@@ -55,6 +55,7 @@ const gameBoard = (() => {
 })();
 
 const displayController = (() => {
+  const selectModeContainer = document.querySelector(".select-mode-container");
   const startForm = document.querySelector(".players-form");
   const p1Marks = document.querySelectorAll(".player1-mark-");
   const p2Marks = document.querySelectorAll(".player2-mark-");
@@ -92,6 +93,10 @@ const displayController = (() => {
     document.querySelector(".info-text").innerText = txt;
   };
   const init = (() => {
+    document.querySelector("#human-btn").addEventListener("click", () => {
+      selectModeContainer.classList.add("hide");
+      document.querySelector(".player-vs-player").classList.remove("hide");
+    });
     p1Marks.forEach((mark, index) => {
       mark.addEventListener("click", (e) => {
         if (!p2Marks[index].classList.contains("selected")) {
