@@ -171,13 +171,18 @@ const displayController = (() => {
           return;
         } else if (checkForEnd()) "";
         else {
-          updateInfoText(`It's ${gameController.getCurrPlayer().name}'s Turn ! `);
-
           gameController.changeTurn();
+          updateInfoText(`It's ${gameController.getCurrPlayer().name}'s Turn ! `);
           if (gameController.getCurrPlayer().type === "AI") {
-            gameController.getCurrPlayer().play();
-            checkForEnd();
-            gameController.changeTurn();
+            updateInfoText(`the AI is thinking ...`);
+            lockBoard();
+            setTimeout(() => {
+              gameController.getCurrPlayer().play();
+              checkForEnd();
+              gameController.changeTurn();
+              updateInfoText(`It's ${gameController.getCurrPlayer().name}'s Turn ! `);
+              unlockBoard();
+            }, 1500);
           }
         }
       })
