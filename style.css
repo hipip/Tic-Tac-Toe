@@ -8,6 +8,7 @@
 body {
   overflow: hidden;
   font-family: "Poppins", sans-serif;
+  height: 100vh;
   background: linear-gradient(#004e92, #000428);
 }
 .main-container {
@@ -25,7 +26,7 @@ body {
   position: absolute;
   text-align: center;
   padding: 2rem;
-  transition: 0.5s cubic-bezier(0.88, 0, 0.11, 0.99);
+  transition: 0.4s ease;
 }
 
 .game-container.hidden {
@@ -94,18 +95,17 @@ body {
   padding: 4rem;
   z-index: 8;
   translate: -50% -50%;
-  transition: 0.6s cubic-bezier(0.88, 0, 0.11, 0.99);
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(15px);
+  transition: 0.4s ease;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
   border-radius: 30px;
-  box-shadow: 0 0 50px -5px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 15px -5px rgba(0, 0, 0, 0.8);
 }
 .winner-container.hidden {
   transform: scale(0);
   backdrop-filter: blur(0px);
-
   transform-origin: center;
-  transition: 0.6s cubic-bezier(0.88, 0, 0.11, 0.99);
+  transition: 0.4s ease;
 }
 
 .round-end-text {
@@ -124,13 +124,14 @@ body {
   box-shadow: 0 0 0 0 greenyellow;
 }
 
-.restart-btn:hover {
+.restart-btn:hover,
+.restart-btn:active {
   transition: 0.4s ease;
   box-shadow: 0 0 55px -5px greenyellow;
 }
 
 .splash-screen-container {
-  transition: 0.5s cubic-bezier(0.88, 0, 0.11, 0.99);
+  transition: 0.4s ease;
   text-align: center;
 }
 
@@ -145,11 +146,12 @@ body {
 }
 
 .players-form {
-  padding: 2rem 4rem;
+  padding: 2rem;
 }
 .fl {
   padding: 2rem;
   display: flex;
+  gap: 20px;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
@@ -262,10 +264,10 @@ body {
   font-weight: 500;
 }
 
-.player-vs-player {
+.seetings-container {
   transition: 0.4s ease;
 }
-.player-vs-player.hide {
+.seetings-container.hide {
   transform: scale(0);
 }
 
@@ -274,6 +276,29 @@ body {
   top: 50%;
   left: 50%;
   translate: -50% -50%;
+}
+
+.ai-seeting {
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
+}
+.ai-level {
+  cursor: pointer;
+  display: block;
+  margin: 1rem;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+}
+
+.ai-level:hover:not(.selected) {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.ai-level.selected {
+  transition: 0.4s ease;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 @media (max-width: 550px) {

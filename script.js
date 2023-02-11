@@ -5,14 +5,15 @@
  *    - hard : uses minmax  algorithm , unbeatable
  */
 
-const easyAI = (() => {
+const easyAI = (mark) => {
+  const incScore = () => score++;
   const play = () => {
     const choices = gameBoard.getEmptyCells();
     const choice = choices[Math.floor(Math.random() * choices.length)];
-    displayController.clickCell(choice);
+    gameBoard.placeMark(choice, mark);
   };
-  return { play };
-})();
+  return { name: "Easy Robot", type: "AI", score: 0, mark, play };
+};
 
 const gameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
@@ -46,7 +47,7 @@ const gameBoard = (() => {
   const placeMark = (index, mark) => {
     if (!isFull(index)) {
       board[index] = mark;
-      console.log(board);
+      displayController.updateBoard();
       return true;
     }
     return false;
@@ -92,10 +93,37 @@ const displayController = (() => {
   const updateInfoText = (txt) => {
     document.querySelector(".info-text").innerText = txt;
   };
+  const checkForEnd = () => {
+    if ((st = gameBoard.checkforWin())) {
+      if (st == "win") {
+        displayWinner(`${gameController.getCurrPlayer().name} is the winner !!`);
+        gameController.incCurr();
+      } else displayWinner("it's a Tie !");
+      updateScoreBoard(gameController.getScores());
+      lockBoard();
+      updateInfoText("");
+      return true;
+    }
+  };
   const init = (() => {
+    const aiLevels = document.querySelectorAll(".ai-level");
+    aiLevels.forEach((e) =>
+      e.addEventListener("click", (e) => {
+        aiLevels.forEach((lvl) => lvl.classList.remove("selected"));
+        e.target.classList.toggle("selected");
+      })
+    );
     document.querySelector("#human-btn").addEventListener("click", () => {
       selectModeContainer.classList.add("hide");
-      document.querySelector(".player-vs-player").classList.remove("hide");
+      document.querySelector(".seetings-container").classList.remove("hide");
+      document.querySelector(".seetings-container").classList.add("human-mode");
+      document.querySelector(".ai-seeting").remove();
+    });
+    document.querySelector("#humanoid-btn").addEventListener("click", () => {
+      selectModeContainer.classList.add("hide");
+      document.querySelector(".seetings-container").classList.remove("hide");
+      document.querySelector(".seetings-container").classList.add("humanoid-mode");
+      document.querySelector(".p2-setting").remove();
     });
     p1Marks.forEach((mark, index) => {
       mark.addEventListener("click", (e) => {
@@ -124,32 +152,33 @@ const displayController = (() => {
     startForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const p1Name = startForm["player1-name"].value.trim();
-      const p2Name = startForm["player2-name"].value.trim();
-      const p1Mark = document.querySelector(".player1-mark-.selected").textContent;
-      const p2Mark = document.querySelector(".player2-mark-.selected").textContent;
-      console.log(p1Name, p1Mark, p2Name, p2Mark);
-      if (p1Name && p2Name && p1Mark && p2Mark) gameController.startGame(p1Name, p1Mark, p2Name, p2Mark);
+      const p1Mark = document.querySelector(".player1-mark-.selected")?.textContent;
+      if (document.querySelector(".seetings-container").classList.contains("human-mode")) {
+        const p2Name = startForm["player2-name"].value.trim();
+        const p2Mark = document.querySelector(".player2-mark-.selected")?.textContent;
+        console.log(p1Name, p1Mark, p2Name, p2Mark);
+        if (p1Name && p2Name && p1Mark && p2Mark) gameController.startGameHuman(p1Name, p1Mark, p2Name, p2Mark);
+      } else {
+        const aiLevel = document.querySelector("input[name='level']:checked").value;
+        if (p1Name && p1Mark) gameController.startGameHumanoid(p1Name, p1Mark, aiLevel);
+      }
     });
     cells.forEach((cell) =>
       cell.addEventListener("click", (e) => {
         const index = e.target.getAttribute("data-index");
-        if (gameBoard.placeMark(index, gameController.getCurrPlayer().mark)) {
-          updateBoard();
-          if ((st = gameBoard.checkforWin())) {
-            if (st == "win") {
-              displayWinner(`${gameController.getCurrPlayer().name} is the winner !!`);
-              gameController.incCurr();
-            } else displayWinner("it's a Tie !");
-            updateScoreBoard(gameController.getScores());
-            updateBoard();
-            lockBoard();
-            updateInfoText("");
-            return;
-          }
-          gameController.changeTurn();
-          updateInfoText(`It's ${gameController.getCurrPlayer().name}'s Turn ! `);
-        } else {
+        if (!gameBoard.placeMark(index, gameController.getCurrPlayer().mark)) {
           updateInfoText(`Illegal Move by ${gameController.getCurrPlayer().name} !`);
+          return;
+        } else if (checkForEnd()) "";
+        else {
+          updateInfoText(`It's ${gameController.getCurrPlayer().name}'s Turn ! `);
+
+          gameController.changeTurn();
+          if (gameController.getCurrPlayer().type === "AI") {
+            gameController.getCurrPlayer().play();
+            checkForEnd();
+            gameController.changeTurn();
+          }
         }
       })
     );
@@ -165,23 +194,31 @@ const displayController = (() => {
 const gameController = (() => {
   const player = (name, mark) => {
     const incrementScore = () => ++score;
-    return { name, mark, score: 0, incrementScore };
+    return { name, type: "human", mark, score: 0, incrementScore };
   };
-  var turn;
+  var curr;
   var p1, p2;
-  const startGame = (p1Name, p1Mark, p2Name, p2Mark) => {
+  const startGameHuman = (p1Name, p1Mark, p2Name, p2Mark) => {
     p1 = player(p1Name, p1Mark);
     p2 = player(p2Name, p2Mark);
-    turn = p1;
+    curr = p1;
     displayController.startGame(p1, p2);
   };
 
-  const incCurr = () => turn.score++;
-  const getCurrPlayer = () => turn;
-  const changeTurn = () => {
-    if (turn === p1) turn = p2;
-    else turn = p1;
+  const startGameHumanoid = (pName, pMark, aiLevel) => {
+    p1 = player(pName, pMark);
+    p2 = easyAI(pMark === "X" ? "O" : "X");
+    curr = p1;
+    displayController.startGame(p1, p2);
   };
+
+  const incCurr = () => curr.score++;
+  const getCurrPlayer = () => curr;
+  const changeTurn = () => {
+    if (curr === p1) curr = p2;
+    else curr = p1;
+  };
+
   const getScores = () => [p1.score, p2.score];
-  return { getCurrPlayer, changeTurn, getScores, incCurr, startGame };
+  return { getCurrPlayer, changeTurn, getScores, incCurr, startGameHuman, startGameHumanoid };
 })();
