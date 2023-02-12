@@ -11,41 +11,36 @@ const AI = (level, mark) => {
     const incrementScore = () => score++;
     const play = () => {
       console.log("tf");
-      const indexes = gameBoard.getEmptyCells();
-      console.log(indexes);
+      const indexes = gameBoard.getEmptyCells(gameBoard.getBoard());
       const index = indexes[Math.floor(Math.random() * indexes.length)];
-      console.log(index);
       gameBoard.placeMark(index, mark);
     };
     return { name: "Easy Robot", type: "AI", score: 0, mark, play };
   };
 
   const hardAI = () => {
-    const minimax = (board, depth, maximizingPlayer) => {
-      let stat = gameBoard.checkforWin(board);
+    const minimax = (b, depth, maximizingPlayer) => {
+      let stat = gameBoard.checkforWin(b);
       if (stat === mark) return 1;
       else if (stat === humanMark) return -1;
       else if (stat === "tie") return 0;
 
       if (maximizingPlayer) {
         let maxVal = -Infinity;
-        gameBoard.getEmptyCells();
-        for (let i = 0; i < board.length; i++) {
-          if (board[i] !== "X" && board[i] !== "O") {
-            board[i] = mark;
-            maxVal = Math.max(maxVal, minimax(board, depth + 1, false));
-            board[i] = "";
-          }
+        let emptyCells = gameBoard.getEmptyCells(b);
+        for (let i of emptyCells) {
+          b[i] = mark;
+          maxVal = Math.max(maxVal, minimax(b, depth + 1, false));
+          b[i] = "";
         }
         return maxVal;
       } else {
         let minVal = Infinity;
-        for (let i = 0; i < board.length; i++) {
-          if (board[i] !== "X" && board[i] !== "O") {
-            board[i] = humanMark;
-            minVal = Math.min(minVal, minimax(board, depth + 1, true));
-            board[i] = "";
-          }
+        let emptyCells = gameBoard.getEmptyCells(b);
+        for (let i of emptyCells) {
+          b[i] = humanMark;
+          minVal = Math.min(minVal, minimax(b, depth + 1, true));
+          b[i] = "";
         }
         return minVal;
       }
@@ -54,16 +49,14 @@ const AI = (level, mark) => {
       let boardCp = [...gameBoard.getBoard()];
       let bestScore = -Infinity;
       let bestPlace;
-      // let emptyIndexes = gameBoard.getEmptyCells();
-      for (let i = 0; i < boardCp.length; i++) {
-        if (boardCp[i] === "") {
-          boardCp[i] = mark;
-          let score = minimax(boardCp, 0, false);
-          boardCp[i] = "";
-          if (score > bestScore) {
-            bestScore = score;
-            bestPlace = i;
-          }
+      let emptyIndexes = gameBoard.getEmptyCells(boardCp);
+      for (let i of emptyIndexes) {
+        boardCp[i] = mark;
+        let score = minimax(boardCp, 0, false);
+        boardCp[i] = "";
+        if (score > bestScore) {
+          bestScore = score;
+          bestPlace = i;
         }
       }
       gameBoard.placeMark(bestPlace, mark);
@@ -83,9 +76,9 @@ const gameBoard = (() => {
     board = ["", "", "", "", "", "", "", "", ""];
     displayController.updateBoard();
   };
-  const getEmptyCells = () => {
+  const getEmptyCells = (b = board) => {
     let r = [];
-    for (let [index, cell] of board.entries()) if (!isFull(board, index)) r.push(index);
+    for (let [index, cell] of b.entries()) if (!isFull(b, index)) r.push(index);
     return r;
   };
   /* returns the mark of the winner if ther is one , returns 0 if it's a tie else -1 */
