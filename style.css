@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 * {
   padding: 0;
   margin: 0;
@@ -9,8 +10,15 @@ body {
   overflow: hidden;
   font-family: "Poppins", sans-serif;
   height: 100vh;
-  background: linear-gradient(#004e92, #000428);
+  background: linear-gradient(#19b0ec, #456fe8, #b94c98, #f0073b);
+  background-size: 100% 300vh;
 }
+
+body.ai {
+  background-position: 0 -200vh;
+  transition: 0.8s ease;
+}
+
 .main-container {
   position: relative;
   width: 100%;
@@ -90,35 +98,31 @@ body {
   align-items: center;
   position: absolute;
   gap: 40px;
-  top: 50%;
+  top: 75vh;
   left: 50%;
-  padding: 4rem;
+  padding: 2rem;
   z-index: 8;
   translate: -50% -50%;
   transition: 0.4s ease;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
   border-radius: 30px;
+  cursor: default;
+  font-size: 1.3rem;
   box-shadow: 0 0 15px -5px rgba(0, 0, 0, 0.8);
 }
 .winner-container.hidden {
-  transform: scale(0);
-  backdrop-filter: blur(0px);
-  transform-origin: center;
+  transform: translateY(50vh);
+  transform-origin: bottom;
   transition: 0.4s ease;
-}
-
-.round-end-text {
-  font-size: 3rem;
 }
 
 .restart-btn {
   cursor: pointer;
   border: none;
   border-radius: 30px;
-  width: 250px;
-  padding: 1rem 2rem;
-  font-size: 1.3rem;
+  min-width: 180px;
+  padding: 1rem 3rem;
   font-weight: 600;
   transition: 0.4s ease;
   box-shadow: 0 0 0 0 greenyellow;
@@ -157,13 +161,17 @@ body {
   align-items: center;
 }
 
+label {
+  margin: 1rem;
+}
 .player-seeting {
   padding: 1rem;
   display: flex;
-  gap: 20px;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  border-radius: 20px;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
 }
 .mark {
   cursor: pointer;
@@ -177,10 +185,14 @@ body {
   align-items: center;
   border-radius: 50%;
   margin: 1rem 0.5rem;
+  color: white;
+  background: none;
 }
 
 .mark.selected {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: white;
+  color: black;
+  transition: 0.4s ease;
 }
 
 .mark:hover:not(.selected) {
@@ -214,6 +226,10 @@ body {
   border-radius: 25px;
   outline: none;
   padding: 0.5rem 1rem;
+}
+
+.inp:focus {
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.4);
 }
 
 .info-text {
@@ -282,8 +298,7 @@ body {
 .ai-seeting {
   padding: 1rem 2rem;
   border-radius: 20px;
-  backdrop-filter: blur(5px);
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
 }
 .ai-level {
   cursor: pointer;

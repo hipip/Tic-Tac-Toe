@@ -150,7 +150,7 @@ const displayController = (() => {
     if (!st) return;
     else if (st === "X" || st === "O") {
       let winner = gameController.getPlayerByMark(st);
-      displayWinner(`${winner.name} is the winner !!`);
+      displayWinner(`${winner.name} is the winner !`);
       gameController.incCurr();
     } else displayWinner("it's a Tie !");
     updateScoreBoard(gameController.getScores());
@@ -177,6 +177,7 @@ const displayController = (() => {
       document.querySelector(".seetings-container").classList.remove("hide");
       document.querySelector(".seetings-container").classList.add("humanoid-mode");
       document.querySelector(".p2-setting").remove();
+      document.body.classList.add("ai");
     });
     p1Marks.forEach((mark, index) => {
       mark.addEventListener("click", (e) => {
