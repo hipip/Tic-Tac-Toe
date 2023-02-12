@@ -4,20 +4,79 @@
  *    - medium I don't know
  *    - hard : uses minmax  algorithm , unbeatable
  */
+const AI = (level, mark) => {
+  let humanMark = mark === "X" ? "O" : "X";
 
-const easyAI = (mark) => {
-  const incScore = () => score++;
-  const play = () => {
-    const choices = gameBoard.getEmptyCells();
-    const choice = choices[Math.floor(Math.random() * choices.length)];
-    gameBoard.placeMark(choice, mark);
+  const easyAI = () => {
+    const incrementScore = () => score++;
+    const play = () => {
+      console.log("tf");
+      const indexes = gameBoard.getEmptyCells();
+      console.log(indexes);
+      const index = indexes[Math.floor(Math.random() * indexes.length)];
+      console.log(index);
+      gameBoard.placeMark(index, mark);
+    };
+    return { name: "Easy Robot", type: "AI", score: 0, mark, play };
   };
-  return { name: "Easy Robot", type: "AI", score: 0, mark, play };
+
+  const hardAI = () => {
+    const minimax = (board, depth, maximizingPlayer) => {
+      let stat = gameBoard.checkforWin(board);
+      if (stat === mark) return 1;
+      else if (stat === humanMark) return -1;
+      else if (stat === "tie") return 0;
+
+      if (maximizingPlayer) {
+        let maxVal = -Infinity;
+        gameBoard.getEmptyCells();
+        for (let i = 0; i < board.length; i++) {
+          if (board[i] !== "X" && board[i] !== "O") {
+            board[i] = mark;
+            maxVal = Math.max(maxVal, minimax(board, depth + 1, false));
+            board[i] = "";
+          }
+        }
+        return maxVal;
+      } else {
+        let minVal = Infinity;
+        for (let i = 0; i < board.length; i++) {
+          if (board[i] !== "X" && board[i] !== "O") {
+            board[i] = humanMark;
+            minVal = Math.min(minVal, minimax(board, depth + 1, true));
+            board[i] = "";
+          }
+        }
+        return minVal;
+      }
+    };
+    const play = () => {
+      let boardCp = [...gameBoard.getBoard()];
+      let bestScore = -Infinity;
+      let bestPlace;
+      // let emptyIndexes = gameBoard.getEmptyCells();
+      for (let i = 0; i < boardCp.length; i++) {
+        if (boardCp[i] === "") {
+          boardCp[i] = mark;
+          let score = minimax(boardCp, 0, false);
+          boardCp[i] = "";
+          if (score > bestScore) {
+            bestScore = score;
+            bestPlace = i;
+          }
+        }
+      }
+      gameBoard.placeMark(bestPlace, mark);
+    };
+    return { name: "SUPER ROBOTO", type: "AI", score: 0, mark, play };
+  };
+  if (level === "easy") return easyAI();
+  else if (level === "hard") return hardAI();
 };
 
 const gameBoard = (() => {
-  let board = ["", "", "", "", "", "", "", "", ""];
-  const isFull = (index) => board[index] !== "";
+  var board = ["", "", "", "", "", "", "", "", ""];
+  const isFull = (b = board, index) => b[index] !== "";
   const getCell = (index) => board[index];
   const getBoard = () => board;
   const resetBoard = () => {
@@ -26,26 +85,26 @@ const gameBoard = (() => {
   };
   const getEmptyCells = () => {
     let r = [];
-    for (let [index, cell] of board.entries()) if (!isFull(index)) r.push(index);
+    for (let [index, cell] of board.entries()) if (!isFull(board, index)) r.push(index);
     return r;
   };
-  const checkforWin = () => {
-    if (
-      (isFull(0) && board[0] === board[1] && board[1] === board[2]) ||
-      (isFull(3) && board[3] === board[4] && board[4] === board[5]) ||
-      (isFull(6) && board[6] === board[7] && board[7] === board[8]) ||
-      (isFull(0) && board[0] === board[3] && board[3] === board[6]) ||
-      (isFull(1) && board[1] === board[4] && board[4] === board[7]) ||
-      (isFull(2) && board[2] === board[5] && board[5] === board[8]) ||
-      (isFull(0) && board[0] === board[4] && board[4] === board[8]) ||
-      (isFull(2) && board[2] === board[4] && board[4] === board[6])
-    )
-      return "win";
-    else if (board.every((cell, index) => isFull(index))) return "tie";
-    else return false;
+  /* returns the mark of the winner if ther is one , returns 0 if it's a tie else -1 */
+  const checkforWin = (b = board) => {
+    // diagonal win
+    if ((isFull(b, 0) && b[0] === b[4] && b[4] === b[8]) || (isFull(b, 2) && b[2] === b[4] && b[4] === b[6])) return b[4];
+
+    // horizontal win
+    for (let i = 0; i < b.length; i += 3) if (isFull(b, i) && b[i] === b[i + 1] && b[i + 1] === b[i + 2]) return b[i];
+
+    // vertical win
+    for (let i = 0; i < 3; i++) if (isFull(b, i) && b[i] === b[i + 3] && b[i + 3] === b[i + 6]) return b[i];
+
+    if (b.every((cell, index) => isFull(b, index))) return "tie";
+
+    return null;
   };
   const placeMark = (index, mark) => {
-    if (!isFull(index)) {
+    if (!isFull(board, index)) {
       board[index] = mark;
       displayController.updateBoard();
       return true;
@@ -94,16 +153,17 @@ const displayController = (() => {
     document.querySelector(".info-text").innerText = txt;
   };
   const checkForEnd = () => {
-    if ((st = gameBoard.checkforWin())) {
-      if (st == "win") {
-        displayWinner(`${gameController.getCurrPlayer().name} is the winner !!`);
-        gameController.incCurr();
-      } else displayWinner("it's a Tie !");
-      updateScoreBoard(gameController.getScores());
-      lockBoard();
-      updateInfoText("");
-      return true;
-    }
+    let st = gameBoard.checkforWin();
+    if (!st) return;
+    else if (st === "X" || st === "O") {
+      let winner = gameController.getPlayerByMark(st);
+      displayWinner(`${winner.name} is the winner !!`);
+      gameController.incCurr();
+    } else displayWinner("it's a Tie !");
+    updateScoreBoard(gameController.getScores());
+    lockBoard();
+    updateInfoText("");
+    return true;
   };
   const init = (() => {
     const aiLevels = document.querySelectorAll(".ai-level");
@@ -160,7 +220,7 @@ const displayController = (() => {
         if (p1Name && p2Name && p1Mark && p2Mark) gameController.startGameHuman(p1Name, p1Mark, p2Name, p2Mark);
       } else {
         const aiLevel = document.querySelector("input[name='level']:checked").value;
-        if (p1Name && p1Mark) gameController.startGameHumanoid(p1Name, p1Mark, aiLevel);
+        if (p1Name && p1Mark && aiLevel) gameController.startGameHumanoid(p1Name, p1Mark, aiLevel);
       }
     });
     cells.forEach((cell) =>
@@ -212,7 +272,8 @@ const gameController = (() => {
 
   const startGameHumanoid = (pName, pMark, aiLevel) => {
     p1 = player(pName, pMark);
-    p2 = easyAI(pMark === "X" ? "O" : "X");
+    let aiMark = pMark === "X" ? "O" : "X";
+    p2 = AI(aiLevel, aiMark);
     curr = p1;
     displayController.startGame(p1, p2);
   };
@@ -224,6 +285,10 @@ const gameController = (() => {
     else curr = p1;
   };
 
+  const getPlayerByMark = (mark) => {
+    return p1.mark === mark ? p1 : p2;
+  };
+
   const getScores = () => [p1.score, p2.score];
-  return { getCurrPlayer, changeTurn, getScores, incCurr, startGameHuman, startGameHumanoid };
+  return { getCurrPlayer, changeTurn, getScores, incCurr, startGameHuman, startGameHumanoid, getPlayerByMark };
 })();
