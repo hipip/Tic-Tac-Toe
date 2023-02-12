@@ -97,8 +97,8 @@ body.ai {
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  gap: 40px;
-  top: 75vh;
+  gap: 20px;
+  top: 50%;
   left: 50%;
   padding: 2rem;
   z-index: 8;
@@ -112,8 +112,8 @@ body.ai {
   box-shadow: 0 0 15px -5px rgba(0, 0, 0, 0.8);
 }
 .winner-container.hidden {
-  transform: translateY(50vh);
-  transform-origin: bottom;
+  transform: scale(0);
+  transform-origin: center;
   transition: 0.4s ease;
 }
 
@@ -145,7 +145,10 @@ body.ai {
 
 .splash-screen-title {
   position: absolute;
-  font-size: 2rem;
+  font-size: 2.2rem;
+  text-decoration: none;
+  font-weight: 900;
+  color: white;
   top: 10% !important;
 }
 
