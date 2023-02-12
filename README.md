@@ -8,5 +8,5 @@ live preview link : https://somehowAlive.github.io/Tic-Tac-Toe
 
 - [x] add the inputs to select player names and marks and types at the begining
 - [x] add the AI easy option
-- [ ] add the AI hard option using minmax algorithm
-- [ ] improve the UI in general
+- [x] add the AI hard option using minmax algorithm
+- [x] improve the UI in general
