@@ -2,7 +2,7 @@
 
 This is a simple Tic Tac Toe project I made, I've learned a lot about javascript, design patters ...etc and Tried to implement a simple basic tic tac toe game using that knowledge
 
-live preview link : https://somehowAlive.github.io/Tic-Tac-Toe
+live preview link : https://hipip.github.io/Tic-Tac-Toe
 
 ## TODOS
 
