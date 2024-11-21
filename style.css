@@ -10,8 +10,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
   font-family: "Poppins", sans-serif;
   background: linear-gradient(to bottom, #1488cc, #2b32b2);
 }
@@ -49,25 +51,28 @@ button {
 }
 
 .main-title {
-  font-size: 2.5rem;
+  text-align: center;
+  font-size: 2.2rem;
   font-weight: 900;
-  margin-bottom: 50px;
   padding: 10px;
   color: white;
 }
 
 .btn-container {
+  margin-top: 20px;
   display: flex;
-  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
 }
 
 .btn {
   color: var(--color);
   background-color: rgba(0, 0, 0, 0.25);
   color: white;
-  font-size: 2rem;
+  font-size: 1.45rem;
   font-weight: 700;
-  padding: 15px 50px;
+  padding: 15px 40px;
   border-radius: 30px;
   box-shadow: 0 0 0 -5px var(--color);
   transition: background-color 0.3s ease;
@@ -76,4 +81,102 @@ button {
 .btn:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.player-setup-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 25px 50px;
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.player-setup-container label {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.player-name-inp {
+  width: 180px;
+  outline: none;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  padding: 10px 20px;
+  box-shadow: 0 0 0 0 white;
+  transition: 0.3s ease;
+}
+
+.player-name-inp:focus {
+  box-shadow: 0 0 30px -10px white;
+}
+
+@keyframes disappear {
+  to {
+    transform: translateY(80%);
+    filter: blur(50px);
+    opacity: 0;
+  }
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.mark-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  padding: 20px;
+  width: 50px;
+  height: 50px;
+  color: white;
+  font-weight: 600;
+  background: none;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.mark-btn.selected {
+  background-color: white;
+  color: black;
+}
+
+#humans-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.players-setup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+#start-game-btn {
+  padding: 15px 60px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: white;
+  color: black;
+  box-shadow: 0 0 0 -5px white;
+  transition: box-shadow 0.3s ease;
+}
+
+#start-game-btn:hover {
+  box-shadow: 0 0 50px -15px white;
 }
