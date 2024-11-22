@@ -21,4 +21,8 @@ const resetBoard = () => {
   document.querySelectorAll(".cell").forEach((cell) => (cell.textContent = ""));
 };
 
-export { changePage, lockBoard, unlockBoard, resetBoard };
+const setMark = (i, j, mark) => {
+  document.querySelector(`#cell-${i}-${j}`).textContent = mark;
+};
+
+export { changePage, lockBoard, unlockBoard, resetBoard, setMark };

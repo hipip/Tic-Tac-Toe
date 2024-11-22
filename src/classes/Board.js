@@ -118,6 +118,25 @@ export default class Board {
     ];
   }
 
+  /**
+   * clones the current board
+   * @returns {Board}
+   */
+  clone() {
+    return new Board(this.mat);
+  }
+
+  /**
+   * returns indexes of possible moves
+   * @returns {Array}
+   */
+  getPossibleMoves() {
+    const moves = [];
+    for (let i = 0; i < 3; i++)
+      for (let j = 0; j < 3; j++) if (this.isEmpty(i, j)) moves.push([i, j]);
+    return moves;
+  }
+
   toString() {
     let str = "\n";
     for (let i = 0; i < 3; i++) {

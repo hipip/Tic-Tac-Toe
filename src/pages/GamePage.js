@@ -56,6 +56,12 @@ const GamePage = (playerOne, playerTwo) => {
           } else if (result === "tie") {
             lockBoard();
             document.body.appendChild(Popup(`It's a tie`, "#4001a5"));
+          } else {
+            if (currentPlayer.name.includes("AI")) {
+              currentPlayer.play(board);
+              currentPlayer =
+                currentPlayer === playerOne ? playerTwo : playerOne;
+            }
           }
         }
       }

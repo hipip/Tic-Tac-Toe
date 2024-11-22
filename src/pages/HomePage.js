@@ -1,7 +1,7 @@
 import Button from "../components/Button.js";
 import Title from "../components/Title.js";
 import { changePage } from "../utils/Dom.js";
-import HumansPage from "./HumansPage.js";
+import SetupPage from "./SetupPage.js";
 const HomePage = () => {
   const container = document.createElement("div");
   container.id = "home-page";
@@ -11,9 +11,11 @@ const HomePage = () => {
   btnContainer.className = "btn-container";
 
   btnContainer.appendChild(
-    Button("btn", "human-btn", "Human 🙋", () => changePage(HumansPage()))
+    Button("btn", "human-btn", "Human 🙋", () => changePage(SetupPage("human")))
   );
-  btnContainer.appendChild(Button("btn", "robot-btn", "Robot 🤖"));
+  btnContainer.appendChild(
+    Button("btn", "robot-btn", "Robot 🤖", () => changePage(SetupPage("robot")))
+  );
 
   container.appendChild(Title("Which Species do you want to play against ?"));
   container.appendChild(btnContainer);
