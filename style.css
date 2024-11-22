@@ -15,7 +15,8 @@ body {
   height: 100vh;
   overflow: hidden;
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(to bottom, #1488cc, #2b32b2);
+  background: #0575e6;
+  background: linear-gradient(to right, #0575e6, #021b79);
 }
 button {
   outline: none;
@@ -24,10 +25,12 @@ button {
 
 #board {
   display: grid;
+  justify-content: center;
   color: white;
   font-size: 3rem;
   font-weight: 700;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 8vw);
+  grid-template-rows: repeat(3, 8vw);
 }
 
 .cell {
@@ -35,8 +38,6 @@ button {
   justify-content: center;
   align-items: center;
   margin: 0.1rem;
-  width: 9vw;
-  height: 9vw;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.4);
 }
@@ -45,7 +46,7 @@ button {
   cursor: default;
 }
 
-.cell:empty:hover {
+#board:not(.locked) .cell:empty:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.28);
 }
@@ -55,6 +56,12 @@ button {
   font-size: 2.2rem;
   font-weight: 900;
   padding: 10px;
+  color: white;
+}
+
+.sub-title {
+  font-size: 1.4rem;
+  font-weight: 500;
   color: white;
 }
 
@@ -114,14 +121,6 @@ button {
   box-shadow: 0 0 30px -10px white;
 }
 
-@keyframes disappear {
-  to {
-    transform: translateY(80%);
-    filter: blur(50px);
-    opacity: 0;
-  }
-}
-
 .flex-center {
   display: flex;
   justify-content: center;
@@ -159,6 +158,20 @@ button {
   gap: 40px;
 }
 
+#game-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-names-cont {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
 .players-setup-container {
   display: flex;
   justify-content: center;
@@ -179,4 +192,66 @@ button {
 
 #start-game-btn:hover {
   box-shadow: 0 0 50px -15px white;
+}
+
+@keyframes disappear {
+  from {
+    transform: translateY(0);
+    filter: blur(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(80%);
+    filter: blur(50px);
+    opacity: 0;
+  }
+}
+
+@keyframes appear {
+  from {
+    transform: translateY(80%);
+    filter: blur(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+.disappear {
+  animation: disappear 0.4s ease forwards;
+}
+
+.appear {
+  animation: appear 0.4s ease forwards;
+}
+
+.popup {
+  position: fixed;
+  bottom: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 80px;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 1.3rem;
+  background-color: var(--bg-color);
+  animation: popup-appear 0.4s ease;
+  transition: transform 0.4s ease;
+}
+
+@keyframes popup-appear {
+  from {
+    transform: translateY(400px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.popup.disappear {
+  transform: translateY(400px);
 }
