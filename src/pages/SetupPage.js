@@ -68,8 +68,10 @@ const SetupPage = (mode) => {
       BODY.appendChild(Popup("Please choose AI difficulty!", "red"));
     } else {
       const aiMark = playerOne.mark === "X" ? "O" : "X";
-      const Ai = new EasyAi(aiMark);
-      changePage(GamePage(playerOne, Ai));
+      if (aiDifficulty === "Easy") {
+        const Ai = new EasyAi(aiMark);
+        changePage(GamePage(playerOne, Ai));
+      }
     }
   };
 

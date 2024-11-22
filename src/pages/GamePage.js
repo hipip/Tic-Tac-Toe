@@ -34,6 +34,23 @@ const GamePage = (playerOne, playerTwo) => {
       }
     }
 
+    const checkForEnd = () => {
+      const result = board.isGameEnded();
+      if (result === "X" || result === "O") {
+        lockBoard();
+        const winner = playerOne.mark === result ? playerOne : playerTwo;
+        document.body.appendChild(
+          Popup(`${winner.name} is the winner`, "#00a508")
+        );
+        return true;
+      } else if (result === "tie") {
+        lockBoard();
+        document.body.appendChild(Popup(`It's a tie`, "#4001a5"));
+        return true;
+      }
+      return false;
+    };
+
     cont.onclick = (e) => {
       const target = e.target;
       if (
@@ -46,22 +63,10 @@ const GamePage = (playerOne, playerTwo) => {
         if (board.setMark(i, j, currentMark)) {
           target.textContent = currentMark;
           currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
-          const result = board.isGameEnded();
-          if (result === "X" || result === "O") {
-            lockBoard();
-            const winner = playerOne.mark === result ? playerOne : playerTwo;
-            document.body.appendChild(
-              Popup(`${winner.name} is the winner`, "#00a508")
-            );
-          } else if (result === "tie") {
-            lockBoard();
-            document.body.appendChild(Popup(`It's a tie`, "#4001a5"));
-          } else {
-            if (currentPlayer.name.includes("AI")) {
-              currentPlayer.play(board);
-              currentPlayer =
-                currentPlayer === playerOne ? playerTwo : playerOne;
-            }
+          if (!checkForEnd() && currentPlayer.name.includes("AI")) {
+            currentPlayer.play(board);
+            checkForEnd();
+            currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
           }
         }
       }

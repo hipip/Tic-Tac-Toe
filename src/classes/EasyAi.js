@@ -13,8 +13,9 @@ export default class EasyAi extends Ai {
   static play(board) {
     const possibleMoves = board.getPossibleMoves();
     const randomMove =
-      possibleMoves[parseInt(Math.random() * possibleMoves.length)];
+      possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
     const [i, j] = randomMove;
+    board.setMark(i, j, this.mark);
     setMark(i, j, this.mark);
   }
 }

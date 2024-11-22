@@ -132,8 +132,11 @@ export default class Board {
    */
   getPossibleMoves() {
     const moves = [];
-    for (let i = 0; i < 3; i++)
-      for (let j = 0; j < 3; j++) if (this.isEmpty(i, j)) moves.push([i, j]);
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (this.isEmpty(i, j)) moves.push([i, j]);
+      }
+    }
     return moves;
   }
 
