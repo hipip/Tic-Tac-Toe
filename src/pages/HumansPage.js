@@ -52,7 +52,7 @@ const HumansPage = () => {
   cont.appendChild(Title("Players Setup"));
   cont.appendChild(playersSetupContainer);
   cont.appendChild(
-    Button("btn", "start-game-btn", "#ff4523", "Start Game", startHumanGame)
+    Button("btn", "start-game-btn", "Start Game", startHumanGame)
   );
 
   return cont;

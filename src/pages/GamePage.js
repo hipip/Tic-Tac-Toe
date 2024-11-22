@@ -1,8 +1,9 @@
 import Title from "../components/Title.js";
 import SubTitle from "../components/SubTitle.js";
 import { board } from "../utils/Settings.js";
-import { lockBoard } from "../utils/Dom.js";
+import { lockBoard, resetBoard, unlockBoard } from "../utils/Dom.js";
 import Popup from "../components/Popup.js ";
+import Button from "../components/Button.js";
 
 const Cell = (i, j) => {
   const c = document.createElement("p");
@@ -63,9 +64,17 @@ const GamePage = (playerOne, playerTwo) => {
     return cont;
   };
 
+  const resetGame = () => {
+    board.reset();
+    resetBoard();
+    unlockBoard();
+    currentPlayer = playerOne;
+  };
+
   cont.appendChild(Title("Tic Tac Toe"));
   cont.appendChild(playerNames);
   cont.appendChild(BoardElem());
+  cont.appendChild(Button("btn", "play-again-btn", "reset Game", resetGame));
 
   return cont;
 };

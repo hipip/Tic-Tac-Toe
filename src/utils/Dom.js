@@ -14,7 +14,11 @@ const lockBoard = () => {
 };
 
 const unlockBoard = () => {
-  document.querySelector("#boad").classList.remove("locked");
+  document.querySelector("#board").classList.remove("locked");
 };
 
-export { changePage, lockBoard, unlockBoard };
+const resetBoard = () => {
+  document.querySelectorAll(".cell").forEach((cell) => (cell.textContent = ""));
+};
+
+export { changePage, lockBoard, unlockBoard, resetBoard };

@@ -74,14 +74,12 @@ button {
 }
 
 .btn {
-  color: var(--color);
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.35);
   color: white;
   font-size: 1.45rem;
   font-weight: 700;
   padding: 15px 40px;
   border-radius: 30px;
-  box-shadow: 0 0 0 -5px var(--color);
   transition: background-color 0.3s ease;
 }
 

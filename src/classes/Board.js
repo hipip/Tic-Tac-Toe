@@ -107,6 +107,17 @@ export default class Board {
     return false;
   }
 
+  /**
+   * resets the board to the initial state
+   */
+  reset() {
+    this.mat = [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ];
+  }
+
   toString() {
     let str = "\n";
     for (let i = 0; i < 3; i++) {

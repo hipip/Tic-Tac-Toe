@@ -11,11 +11,9 @@ const HomePage = () => {
   btnContainer.className = "btn-container";
 
   btnContainer.appendChild(
-    Button("btn", "human-btn", "#ff7500", "Human 🙋", () =>
-      changePage(HumansPage())
-    )
+    Button("btn", "human-btn", "Human 🙋", () => changePage(HumansPage()))
   );
-  btnContainer.appendChild(Button("btn", "robot-btn", "#dc143c", "Robot 🤖"));
+  btnContainer.appendChild(Button("btn", "robot-btn", "Robot 🤖"));
 
   container.appendChild(Title("Which Species do you want to play against ?"));
   container.appendChild(btnContainer);
