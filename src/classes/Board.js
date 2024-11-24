@@ -123,7 +123,9 @@ export default class Board {
    * @returns {Board}
    */
   clone() {
-    return new Board(this.mat);
+    const newBoard = new Board();
+    newBoard.mat = this.mat.map((row) => [...row]); // Deep copy
+    return newBoard;
   }
 
   /**

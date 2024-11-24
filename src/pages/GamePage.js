@@ -4,6 +4,7 @@ import { board } from "../utils/Settings.js";
 import { lockBoard, resetBoard, unlockBoard } from "../utils/Dom.js";
 import Popup from "../components/Popup.js ";
 import Button from "../components/Button.js";
+import Ai from "../classes/Ai.js";
 
 const Cell = (i, j) => {
   const c = document.createElement("p");
@@ -63,7 +64,7 @@ const GamePage = (playerOne, playerTwo) => {
         if (board.setMark(i, j, currentMark)) {
           target.textContent = currentMark;
           currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
-          if (!checkForEnd() && currentPlayer.name.includes("AI")) {
+          if (!checkForEnd() && currentPlayer instanceof Ai) {
             currentPlayer.play(board);
             checkForEnd();
             currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
