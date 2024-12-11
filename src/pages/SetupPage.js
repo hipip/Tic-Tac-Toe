@@ -7,6 +7,7 @@ import GamePage from "./GamePage.js";
 import Player from "../classes/Player.js";
 import AiSetup from "../components/AiSetup.js";
 import EasyAi from "../classes/EasyAi.js";
+import HardAi from "../classes/HardAi.js";
 
 const SetupPage = (mode) => {
   const BODY = document.body;
@@ -70,6 +71,9 @@ const SetupPage = (mode) => {
       const aiMark = playerOne.mark === "X" ? "O" : "X";
       if (aiDifficulty === "Easy") {
         const Ai = new EasyAi(aiMark);
+        changePage(GamePage(playerOne, Ai));
+      } else {
+        const Ai = new HardAi(aiMark);
         changePage(GamePage(playerOne, Ai));
       }
     }

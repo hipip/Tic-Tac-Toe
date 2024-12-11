@@ -32,6 +32,15 @@ export default class Board {
   }
 
   /**
+   * resets the given cell to zero
+   * @param {Number} i
+   * @param {Number} j
+   */
+  resetMark(i, j) {
+    this.mat[i][j] = 0;
+  }
+
+  /**
    * checks for a horizontal win the index line
    * @param {Number} line
    * @returns {String | Boolean} the mark of the winner or false
@@ -97,7 +106,7 @@ export default class Board {
 
   /**
    * checks if game has ended
-   * @returns {String | Boolean} the mark of the winning player or false if game not ended yet
+   * @returns {String | Boolean} the mark of the winning player or false if game not ended yet or "tie"
    */
   isGameEnded() {
     let winner =
@@ -116,16 +125,6 @@ export default class Board {
       [0, 0, 0],
       [0, 0, 0],
     ];
-  }
-
-  /**
-   * clones the current board
-   * @returns {Board}
-   */
-  clone() {
-    const newBoard = new Board();
-    newBoard.mat = this.mat.map((row) => [...row]); // Deep copy
-    return newBoard;
   }
 
   /**
