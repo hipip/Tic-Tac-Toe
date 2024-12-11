@@ -1,12 +1,9 @@
 # Tic-Tac-Toe
 
-This is a simple Tic Tac Toe project I made, I've learned a lot about javascript, design patters ...etc and Tried to implement a simple basic tic tac toe game using that knowledge
+This is a fully interactive Tic-Tac-Toe game built with JavaScript. It offers multiple gameplay modes, ensuring fun and challenging experiences for players of all skill levels.
 
-live preview link : https://hipip.github.io/Tic-Tac-Toe
-
-## TODOS
-
-- [x] add the inputs to select player names and marks and types at the begining
-- [x] add the AI easy option
-- [x] add the AI hard option using minmax algorithm
-- [x] improve the UI in general
+Features
+* Human vs Human: Play locally with a friend on the same device.
+* Human vs AI:
+   - Easy AI: A relaxed mode where the AI selects moves randomly.
+   - Unbeatable AI: powered by the Minimax Algorithm, ensuring the AI always plays the best possible move, you either lose or tie!
