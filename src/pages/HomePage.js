@@ -1,0 +1,25 @@
+import Button from "../components/Button.js";
+import Title from "../components/Title.js";
+import { changePage } from "../utils/Dom.js";
+import SetupPage from "./SetupPage.js";
+const HomePage = () => {
+  const container = document.createElement("div");
+  container.id = "home-page";
+  container.className = "page";
+
+  const btnContainer = document.createElement("div");
+  btnContainer.className = "btn-container";
+
+  btnContainer.appendChild(
+    Button("btn", "human-btn", "Human 🙋", () => changePage(SetupPage("human")))
+  );
+  btnContainer.appendChild(
+    Button("btn", "robot-btn", "Robot 🤖", () => changePage(SetupPage("robot")))
+  );
+
+  container.appendChild(Title("Which Species do you want to play against ?"));
+  container.appendChild(btnContainer);
+  return container;
+};
+
+export default HomePage;
